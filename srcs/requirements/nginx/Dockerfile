@@ -5,12 +5,14 @@
 #                                                     +:+ +:+         +:+      #
 #    By: rliu <rliu@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/12/19 19:19:32 by rliu              #+#    #+#              #
-#    Updated: 2022/12/19 19:19:38 by rliu             ###   ########.fr        #
+#    Created: 2022/12/22 09:31:58 by rliu              #+#    #+#              #
+#    Updated: 2022/12/22 09:31:59 by rliu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FROM	alpine:3.14
+
+
+FROM	alpine:3.15
 
 RUN		apk update
 RUN		apk upgrade
@@ -32,7 +34,7 @@ RUN		openssl req \
 		-sha256 \
 		-days 365 \
 		-nodes \
-		-subj "/C=FR/ST=PACA/L=Nice/O=42/OU=acoezard/CN=localhost" \
+		-subj "/C=FR/ST=Paris/L=Paris/O=42/OU=rliu/CN=localhost" \
 		-keyout /etc/nginx/ssl/inception.key \
 		-out /etc/nginx/ssl/inception.cert
 

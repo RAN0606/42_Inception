@@ -5,12 +5,13 @@
 #                                                     +:+ +:+         +:+      #
 #    By: rliu <rliu@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/12/19 19:19:48 by rliu              #+#    #+#              #
-#    Updated: 2022/12/19 19:20:12 by rliu             ###   ########.fr        #
+#    Created: 2022/12/22 09:32:44 by rliu              #+#    #+#              #
+#    Updated: 2022/12/22 09:32:45 by rliu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FROM	alpine:3.14
+
+FROM	alpine:3.15
 
 RUN		apk update
 RUN		apk upgrade

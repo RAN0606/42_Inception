@@ -5,12 +5,12 @@
 #                                                     +:+ +:+         +:+      #
 #    By: rliu <rliu@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/12/19 19:19:08 by rliu              #+#    #+#              #
-#    Updated: 2022/12/19 19:19:19 by rliu             ###   ########.fr        #
+#    Created: 2022/12/22 09:28:25 by rliu              #+#    #+#              #
+#    Updated: 2022/12/22 09:28:31 by rliu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FROM		alpine:3.14
+FROM		alpine:3.15
 
 RUN			apk update
 RUN			apk upgrade
@@ -40,8 +40,7 @@ RUN			chmod 777 /var/lib/mysql
 
 COPY		conf/entrypoint.sh entrypoint.sh
 RUN			chmod +x entrypoint.sh
-ENTRYPOINT	["./entrypoint.sh"]
+ENTRYPOINT	["sh","./entrypoint.sh"]
 
 #==============================================================================#
 EXPOSE		3306
-

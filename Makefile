@@ -5,17 +5,15 @@
 #                                                     +:+ +:+         +:+      #
 #    By: rliu <rliu@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/12/19 19:20:54 by rliu              #+#    #+#              #
-#    Updated: 2022/12/19 19:21:00 by rliu             ###   ########.fr        #
+#    Created: 2022/12/22 09:32:59 by rliu              #+#    #+#              #
+#    Updated: 2022/12/22 09:33:13 by rliu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 NAME			:=	inception
 VERSION			:=	1.0
 
-# -----------------------------------------------------------------------------
-# COMPILATION
-# -----------------------------------------------------------------------------
 SRCS_DIR		:=	srcs
 
 COMPOSE_FILE	:=	${SRCS_DIR}/docker-compose.yml
@@ -24,57 +22,35 @@ ENV_FILE		:=	${SRCS_DIR}/.env
 FLAGS			:=	-f ${COMPOSE_FILE} \
 					-p ${NAME}
 
-# -----------------------------------------------------------------------------
-# COLORS
-# -----------------------------------------------------------------------------
-__RED			:=	"\033[1;31m"
-__GREEN			:=	"\033[1;32m"
-__YELLOW		:=	"\033[1;33m"
-__BLUE			:=	"\033[1;36m"
-__WHITE			:=	"\033[1;37m"
-__EOC			:=	"\033[0;0m"
 
-# -----------------------------------------------------------------------------
-# RULES
-# -----------------------------------------------------------------------------
 all: build
 
 build:
 	@mkdir -p /home/rliu/data/database
 	@mkdir -p /home/rliu/data/www
 	@docker compose ${FLAGS} up -d --build
-	@echo ${__GREEN}"ready"${__WHITE}" - docker services are up"${__EOC}
+	@echo "ready - docker services are up"
 
 start:
-	@docker compose ${FLAGS} start > /dev/null
-	@echo ${__GREEN}"ready"${__WHITE}" - docker services have been started"${__EOC}
+	@docker compose ${FLAGS} start 2> /dev/null
+	@echo "ready - docker services have been started"
 
 stop:
-	@docker compose ${FLAGS} stop > /dev/null
-	@echo ${__RED}"stopped"${__WHITE}" - docker services have been stopped"${__EOC}
+	@docker compose ${FLAGS} stop 2> /dev/null
+	@echo "stopped - docker services have been stopped"
 
 status:
 	@docker compose ${FLAGS} ps
 
 clean:
-	@sudo rm -rf /home/rliu/data/* > /dev/null
-	@echo ${__BLUE}"info"${__WHITE}" - cleaned docker data"${__EOC}
+	@docker compose  ${FLAGS} down --rmi  all -v || true 
+	@echo "info - stop and delete container and networks\n cleaned docker images(s)"
+	@echo "info - cleaned docker volumes(s)"
 
 fclean: clean
-	@docker rmi -f nginx > /dev/null
-	@docker rmi -f mariadb > /dev/null
-	@docker rmi -f wordpress > /dev/null
-	@echo ${__BLUE}"info"${__WHITE}" - cleaned docker images(s)"${__EOC}
-	@docker rm -f nginx > /dev/null
-	@docker rm -f mariadb > /dev/null
-	@docker rm -f wordpress > /dev/null
-	@echo ${__BLUE}"info"${__WHITE}" - cleaned docker container(s)"${__EOC}
-	@docker volume rm -f inception_database > /dev/null
-	@docker volume rm -f inception_www > /dev/null
-	@echo ${__BLUE}"info"${__WHITE}" - cleaned docker volumes(s)"${__EOC}
-	@docker network rm inception > /dev/null
-	@echo ${__BLUE}"info"${__WHITE}" - cleaned docker network(s)"${__EOC}
+	@sudo rm -rf /home/rliu/data >/dev/null
+	@echo "info - cleaned local data"
 
-re: stop fclean all
+re:  fclean all
 
 .PHONY: all start stop status fclean clean re
